@@ -5,10 +5,15 @@
  * @format
  * @flow strict-local
  */
-import 'react-native-gesture-handler';
 import React from 'react';
+import DatabaseProvider from '@nozbe/watermelondb/DatabaseProvider';
+import database from './src/database';
 import Navigation from './src/navigation';
 
-const App: () => React$Node = () => <Navigation />;
+const App: () => React$Node = () => (
+  <DatabaseProvider database={database}>
+    <Navigation />
+  </DatabaseProvider>
+);
 
 export default App;
