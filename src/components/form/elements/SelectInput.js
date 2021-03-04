@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Modal, Text, View, TouchableWithoutFeedback } from 'react-native';
+import TextInput from './TextInput';
 import styled from 'styled-components/native';
 
 export default ({
@@ -11,6 +12,7 @@ export default ({
 }) => {
   const [modalVisible, setModalVisible] = useState(null);
   const [inputValue, setInputValue] = useState(null);
+  const input = useRef(null);
 
   const showModal = () => {
     setModalVisible(true);
@@ -20,12 +22,20 @@ export default ({
     setModalVisible(false);
   };
 
+  const onFocus = () => {
+    input.current.blur();
+    showModal();
+  };
+
   return (
     <View style={containerStyle}>
-      <Input
+      <TextInput
+        ref={input}
         value={inputValue}
+        onFocus={onFocus}
         placeholder={placeholder || 'Выберите значение из списка'}
-        onPress={showModal}
+        showSoftInputOnFocus={false}
+        {...props}
       />
       <Modal visible={modalVisible} transparent animationType="fade">
         <TouchableWithoutFeedback onPress={hideModal}>
@@ -58,22 +68,6 @@ export default ({
     </View>
   );
 };
-
-const InputContainer = styled.View`
-  padding: 15px;
-  background: #ffffff;
-  border-radius: 10px;
-`;
-
-const Input = ({ placeholder, value, onPress }) => (
-  <TouchableWithoutFeedback onPress={onPress}>
-    <InputContainer>
-      <Text style={{ color: value ? '#000000' : '#4d4d4d' }}>
-        {value || placeholder || 'Выберите значение из списка...'}
-      </Text>
-    </InputContainer>
-  </TouchableWithoutFeedback>
-);
 
 const ModalOverlay = styled.View`
   position: absolute;
