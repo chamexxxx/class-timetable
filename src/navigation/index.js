@@ -2,6 +2,7 @@ import React from 'react';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Timetable from '../screens/Timetable.js';
+import Timetables from '../screens/Timetables.screen';
 import TimetableCreation from '../screens/TimetableCreation.screen';
 
 const { Navigator, Screen } = createStackNavigator();
@@ -26,6 +27,19 @@ const Navigation = () => (
         headerTintColor: '#bf394d',
         cardStyle: { backgroundColor: '#343434' },
       }}>
+      <Screen
+        name="Timetables"
+        component={Timetables}
+        options={{
+          title: 'Список расписаний',
+          headerStyle: {
+            backgroundColor: '#343434',
+            elevation: 0,
+          },
+          headerTintColor: '#bf394d',
+          cardStyle: { backgroundColor: '#bf394d' },
+        }}
+      />
       <Screen
         name="Timetable"
         component={Timetable}
