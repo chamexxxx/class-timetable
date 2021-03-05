@@ -3,6 +3,8 @@ import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite';
 
 import schema from './models/schema';
 
+import Timetable from './models/Timetable.model';
+
 const adapter = new SQLiteAdapter({
   dbName: 'ClassTimetable',
   schema,
@@ -10,7 +12,7 @@ const adapter = new SQLiteAdapter({
 
 const database = new Database({
   adapter,
-  modelClasses: [],
+  modelClasses: [Timetable],
   actionsEnabled: true,
 });
 

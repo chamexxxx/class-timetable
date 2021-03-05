@@ -1,7 +1,8 @@
 import React from 'react';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import TimetableScreen from '../screens/Timetable.js';
+import Timetable from '../screens/Timetable.js';
+import TimetableCreation from '../screens/TimetableCreation.screen';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -15,11 +16,25 @@ const MyTheme = {
 
 const Navigation = () => (
   <NavigationContainer theme={MyTheme}>
-    <Navigator initialRouteName="Timetable">
+    <Navigator
+      initialRouteName="Timetables"
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#ffffff',
+          elevation: 0, //
+        },
+        headerTintColor: '#bf394d',
+        cardStyle: { backgroundColor: '#343434' },
+      }}>
       <Screen
-        name="Home"
-        component={TimetableScreen}
+        name="Timetable"
+        component={Timetable}
         options={{ title: 'Расписание' }}
+      />
+      <Screen
+        name="TimetableCreation"
+        component={TimetableCreation}
+        options={{ title: 'Создать расписание' }}
       />
     </Navigator>
   </NavigationContainer>
