@@ -1,44 +1,39 @@
-import React from 'react';
-import Validation from './Validation';
+import React, { useState } from 'react';
+import useValidation from '../../hooks/validation';
 import Form from './Form';
 import Field from './Field';
 import TextInput from './elements/TextInput';
 
-export default class TimetableForm extends Validation {
-  constructor(props) {
-    super(props);
-    this.state = { ...this.state, name: null };
-  }
+export default ({ onSubmit }) => {
+  const [name, setName] = useState(null);
+  const { validate, errors } = useValidation(
+    {
+      name: { required: true, message: 'Введите название расписания' },
+    },
+    { name },
+  );
 
-  rules = {
-    name: { required: true, message: 'Введите название расписания' },
-  };
+  const _onSubmit = () => {
+    const [isError] = validate();
 
-  _onSubmit = () => {
-    const errors = this.validate(this.rules);
-
-    if (Object.keys(errors).length === 0) {
-      this.props.onSubmit({ ...this.state });
+    if (!isError) {
+      onSubmit({ name });
     }
   };
 
-  render() {
-    return (
-      <Form onSubmit={this._onSubmit}>
-        <Field
-          render={() => (
-            <TextInput
-              onChangeText={(name) => this.setState({ name })}
-              value={this.state.name}
-              placeholder="Название расписания"
-              autoFocus={true}
-            />
-          )}
-          errorMessage={
-            this.state.errors.name && this.state.errors.name[0].message
-          }
-        />
-      </Form>
-    );
-  }
-}
+  return (
+    <Form onSubmit={_onSubmit}>
+      <Field
+        render={() => (
+          <TextInput
+            onChangeText={setName}
+            value={name}
+            placeholder="Название расписания"
+            autoFocus={true}
+          />
+        )}
+        errorMessage={errors.name && errors.name[0].message}
+      />
+    </Form>
+  );
+};
