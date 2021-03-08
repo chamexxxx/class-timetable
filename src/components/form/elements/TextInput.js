@@ -20,9 +20,10 @@ const InputContainer = styled.View`
   border-radius: 10px;
 `;
 
-const TextInput = styled.TextInput.attrs({
+const TextInput = styled.TextInput.attrs(({ required, placeholder }) => ({
   placeholderTextColor: '#4d4d4d',
-})`
+  placeholder: required ? placeholder + ' *' : placeholder,
+}))`
   flex: 1;
 `;
 

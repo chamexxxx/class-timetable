@@ -5,6 +5,8 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import TextInput from './TextInput';
 
+const { DATE, TIME } = moment.HTML5_FMT;
+
 export default ({ mode, containerStyle, onChangeValue, ...props }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [inputValue, setInputValue] = useState(null);
@@ -19,15 +21,17 @@ export default ({ mode, containerStyle, onChangeValue, ...props }) => {
   };
 
   const handleConfirm = (date) => {
+    const momentDate = moment(date);
+
     if (mode === 'date') {
-      setInputValue(moment(date).format('DD.MM.YYYY'));
+      setInputValue(momentDate.format(DATE));
     } else if (mode === 'time') {
-      setInputValue(moment(date).format('hh:mm'));
+      setInputValue(momentDate.format(TIME));
     } else if (mode === 'datetime') {
-      setInputValue(moment(date).format('DD.MM.YYYY hh:mm'));
+      setInputValue(momentDate.format(DATE + ' ' + TIME));
     }
 
-    onChangeValue(date);
+    onChangeValue(momentDate);
 
     hideDatePicker();
   };
@@ -56,6 +60,7 @@ export default ({ mode, containerStyle, onChangeValue, ...props }) => {
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
         mode={mode}
+        is24Hour={true}
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
       />
