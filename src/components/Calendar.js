@@ -7,15 +7,23 @@ const isToday = (comparedDate, currentDate = moment()) => {
   return comparedDate.isSame(currentDate, 'day');
 };
 
+const defaultStyles = {
+  backgroundColor: 'rgba(0, 0, 0, 0.1)',
+};
+
 const customDatesStylesFunc = (date) => {
   if (isToday(date)) {
     return {
       dateContainerStyle: {
-        borderColor: '#678eff',
+        ...defaultStyles,
+        borderColor: '#857cbd',
         borderWidth: 2,
       },
     };
   }
+  return {
+    dateContainerStyle: defaultStyles,
+  };
 };
 
 export default React.forwardRef((props, ref) => (
@@ -24,30 +32,31 @@ export default React.forwardRef((props, ref) => (
     ref={ref}
     selectedDate={moment()}
     style={{
-      height: 100,
+      height: 120,
       paddingTop: 10,
-      paddingBottom: 10,
       borderBottomLeftRadius: 20,
       borderBottomRightRadius: 20,
     }}
-    calendarColor="#545454"
+    calendarColor="#ffffff"
     calendarHeaderStyle={{
       marginBottom: 5,
-      color: 'white',
+      color: '#000000',
       fontSize: 15,
       textTransform: 'uppercase',
     }}
-    dayContainerStyle={{ borderRadius: 10 }}
-    dateNumberStyle={{ color: 'white' }}
-    dateNameStyle={{ color: 'white', fontSize: 13 }}
+    dayComponentHeight={50}
+    dayContainerStyle={{
+      borderRadius: 10,
+    }}
+    dateNumberStyle={{ color: '#000000' }}
+    dateNameStyle={{ color: '#000000', fontSize: 13 }}
     highlightDateContainerStyle={{
-      backgroundColor: 'rgba(255, 255, 255, 0.2)',
+      backgroundColor: '#857cbd',
     }}
     highlightDateNumberStyle={{ color: '#fff' }}
     highlightDateNameStyle={{ color: '#fff', fontSize: 13 }}
     iconContainer={{ flex: 0.12 }}
-    leftSelector={[]}
-    rightSelector={[]}
+    calendarAnimation={{ type: 'sequence', duration: 0 }}
     locale={{
       name: 'ru',
       config: locale,
