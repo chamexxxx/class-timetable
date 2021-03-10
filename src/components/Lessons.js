@@ -1,15 +1,20 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
-import Lesson from './Lesson.js';
+import { FlatList } from 'react-native';
+import Lesson from './Lesson';
 
 export default ({ data, style }) => {
   const list = data.sort((a, b) => a.number > b.number);
 
+  const renderItem = ({ item, index }) => {
+    return <Lesson key={index} {...item} style={{ marginTop: 10 }} />;
+  };
+
   return (
-    <ScrollView style={style}>
-      {list.map((lesson, index) => {
-        return <Lesson key={index} {...lesson} style={{ marginTop: 10 }} />;
-      })}
-    </ScrollView>
+    <FlatList
+      data={list}
+      renderItem={renderItem}
+      keyExtractor={(item) => item.id}
+      style={style}
+    />
   );
 };
