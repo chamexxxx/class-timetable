@@ -1,17 +1,19 @@
 import React from 'react';
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import Button from './elements/Button';
 
-export default ({ children, onSubmit, buttonText }) => {
+export default ({ children, onSubmit, buttonDisabled, style, buttonTitle }) => {
   return (
     <View style={{ padding: 10 }}>
-      {children}
-      <Button
-        title={buttonText || 'Сохранить'}
-        color="steelblue"
-        onPress={onSubmit}
-        style={{ marginTop: 5 }}
-      />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {children}
+        <Button
+          title={buttonTitle || 'Сохранить'}
+          onPress={onSubmit}
+          style={{ marginTop: 5 }}
+          disabled={buttonDisabled}
+        />
+      </ScrollView>
     </View>
   );
 };

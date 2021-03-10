@@ -3,15 +3,18 @@ import styled from 'styled-components/native';
 
 const defaultTitle = 'Button';
 
-export default ({ title, style, onPress }) => (
-  <ButtonContainer onPress={onPress} style={style}>
+export default ({ title, onPress, disabled, style }) => (
+  <ButtonContainer
+    onPress={() => !disabled && onPress()}
+    disabled={disabled}
+    style={style}>
     <ButtonText>{title || defaultTitle}</ButtonText>
   </ButtonContainer>
 );
 
 const ButtonContainer = styled.TouchableOpacity`
   padding: 10px;
-  background: steelblue;
+  background: ${(props) => (props.disabled ? '#b3b3b3' : '#857cbd')};
   border-radius: 10px;
 `;
 
