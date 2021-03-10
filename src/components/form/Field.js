@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components/native';
 import ErrorMessage from '../ErrorMessage';
 
-export default ({ render, errorMessage }) => {
+export default ({ children, errorMessage }) => {
   return (
     <Container>
-      {render()}
+      {children}
       {errorMessage && (
         <ErrorMessage style={{ marginTop: 5 }}>{errorMessage}</ErrorMessage>
       )}
