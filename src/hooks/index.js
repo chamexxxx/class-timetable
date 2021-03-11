@@ -4,6 +4,7 @@ import moment from 'moment';
 export const usePickLessons = (lessons) => {
   return lessons.map((item) => {
     return pick(item, [
+      'id',
       'number',
       'name',
       'type',
@@ -11,6 +12,8 @@ export const usePickLessons = (lessons) => {
       'teacher',
       'location',
       'appointedDate',
+      'startDate',
+      'endDate',
     ]);
   });
 };
@@ -27,7 +30,6 @@ export const useSortArrayByDate = (array) => {
 
 export const useFillGroupLessons = (lessons) => {
   return lessons.reduce((acc, item, index, array) => {
-    // console.log(index, array.length);
     const intermediateItems = [];
 
     if (index !== array.length - 1) {
