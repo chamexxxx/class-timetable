@@ -4,7 +4,7 @@ import Form from '../components/form/LessonForm';
 
 export default ({ navigation, route }) => {
   const database = useDatabase();
-  const { timetableId } = route.params;
+  const { timetableId, ...values } = route.params;
 
   const onSubmit = async (data) => {
     const timetablesCollection = database.get('timetables');
@@ -13,5 +13,5 @@ export default ({ navigation, route }) => {
     navigation.goBack();
   };
 
-  return <Form onSubmit={onSubmit} />;
+  return <Form onSubmit={onSubmit} {...values} />;
 };
