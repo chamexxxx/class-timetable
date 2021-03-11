@@ -1,10 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Modal, Text, View, TouchableWithoutFeedback } from 'react-native';
 import TextInput from './TextInput';
 import styled from 'styled-components/native';
 
 export default ({
   items,
+  value,
   onChangeValue,
   placeholder,
   containerStyle,
@@ -13,6 +14,12 @@ export default ({
   const [modalVisible, setModalVisible] = useState(null);
   const [inputValue, setInputValue] = useState(null);
   const input = useRef(null);
+  useEffect(() => {
+    const item = items.find((el) => el.value === value);
+    if (item) {
+      setInputValue(item.label);
+    }
+  }, [items, value]);
 
   const showModal = () => {
     setModalVisible(true);

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
@@ -7,10 +7,29 @@ import TextInput from './TextInput';
 
 const { DATE, TIME } = moment.HTML5_FMT;
 
-export default ({ mode, containerStyle, onChangeValue, ...props }) => {
+export default ({ mode, value, onChangeValue, containerStyle, ...props }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [inputValue, setInputValue] = useState(null);
   const input = useRef(null);
+
+  useEffect(() => {
+    setInputValue(formatDate(value));
+  }, [value, formatDate]);
+
+  const formatDate = useCallback(
+    (date) => {
+      const momentDate = moment(date);
+
+      if (mode === 'date') {
+        return momentDate.format(DATE);
+      } else if (mode === 'time') {
+        return momentDate.format(TIME);
+      } else if (mode === 'datetime') {
+        return momentDate.format(DATE + ' ' + TIME);
+      }
+    },
+    [mode],
+  );
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -22,17 +41,8 @@ export default ({ mode, containerStyle, onChangeValue, ...props }) => {
 
   const handleConfirm = (date) => {
     const momentDate = moment(date);
-
-    if (mode === 'date') {
-      setInputValue(momentDate.format(DATE));
-    } else if (mode === 'time') {
-      setInputValue(momentDate.format(TIME));
-    } else if (mode === 'datetime') {
-      setInputValue(momentDate.format(DATE + ' ' + TIME));
-    }
-
+    setInputValue(formatDate(momentDate));
     onChangeValue(momentDate);
-
     hideDatePicker();
   };
 
