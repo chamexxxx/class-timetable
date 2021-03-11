@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import ErrorMessage from '../ErrorMessage';
+import ErrorMessage from 'components/ErrorMessage';
 
 export default ({ children, errorMessage }) => {
   return (

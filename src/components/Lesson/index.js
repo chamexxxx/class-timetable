@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 import moment from 'moment';
 import Card from './LessonCard';
 import Actions from './LessonActions.js';
-import useProgress from '../../hooks/useProgress.js';
+import useProgress from 'hooks/useProgress.js';
 
 export default ({
   startDate,

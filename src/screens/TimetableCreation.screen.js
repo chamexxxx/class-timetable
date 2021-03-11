@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDatabase } from '@nozbe/watermelondb/hooks';
-import Form from '../components/form/TimetableForm';
+import Form from 'components/form/TimetableForm';
 
 const TimetableCreationScreen = ({ navigation }) => {
   const database = useDatabase();

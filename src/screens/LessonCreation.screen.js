@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDatabase } from '@nozbe/watermelondb/hooks';
-import Form from '../components/form/LessonForm';
+import Form from 'components/form/LessonForm';
 
 export default ({ navigation, route }) => {
   const database = useDatabase();

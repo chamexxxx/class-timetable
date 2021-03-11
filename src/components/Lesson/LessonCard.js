@@ -3,8 +3,8 @@ import { View, Text } from 'react-native';
 import { Bar } from 'react-native-progress';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styled from 'styled-components/native';
-import useDeclOfNum from '../../hooks/useDeclOfNum.js';
-import colors from '../../styles/colors';
+import useDeclOfNum from 'hooks/useDeclOfNum.js';
+import colors from 'styles/colors';
 
 export default ({
   number,

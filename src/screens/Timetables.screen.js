@@ -3,9 +3,9 @@ import { View } from 'react-native';
 import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import withObservables from '@nozbe/with-observables';
 import styled from 'styled-components/native';
-import List from '../components/List';
-import CreationButton from '../components/CreationButton';
-import SearchInput from '../components/form/elements/SearchInput';
+import List from 'components/List';
+import CreationButton from 'components/CreationButton';
+import SearchInput from 'components/form/elements/SearchInput';
 
 const TimetablesScreen = ({ navigation, timetables }) => {
   const [items, setItems] = useState([]);
