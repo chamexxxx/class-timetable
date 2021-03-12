@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import useDate from 'react-use-date';
 import styled from 'styled-components/native';
 import moment from 'moment';
@@ -9,13 +9,15 @@ import useProgress from 'hooks/useProgress.js';
 export default ({
   startDate,
   endDate,
+  status,
+  onChangeStatus,
   onEdit,
   onCopy,
   onDelete,
   style,
   ...props
 }) => {
-  const [cardIsActive, setCardIsActive] = useState(true);
+  const [isActive, setIsActive] = useState(false); // true - actions is active, false - card is active
   const [minHeight, setMinHeight] = useState(null);
   const currentDate = useDate({ interval: 'minute' });
   const { percent, remained } = useProgress(startDate, endDate, currentDate);
@@ -23,16 +25,40 @@ export default ({
   const startTime = startDate && moment(startDate).format('HH:mm');
   const endTime = endDate && moment(endDate).format('HH:mm');
 
+  useEffect(() => {
+    setIsActive(!!status);
+  }, [status]);
+
+  const hideCard = () => {
+    setIsActive(true);
+    onChangeStatus(true);
+  };
+
+  const showCard = () => {
+    setIsActive(false);
+    onChangeStatus(false);
+  };
+
+  const _onEdit = () => {
+    showCard();
+    onEdit && onEdit();
+  };
+
+  const _onCopy = () => {
+    showCard();
+    onCopy && onCopy();
+  };
+
   return (
     <Container style={[{ minHeight }, style]}>
-      {cardIsActive ? (
+      {!isActive ? (
         <Card
           startTime={startTime}
           endTime={endTime}
           progress={percent}
           remained={remained}
           {...props}
-          onPress={() => setCardIsActive(false)}
+          onPress={hideCard}
           onLayout={(event) => {
             const { height } = event.nativeEvent.layout;
             setMinHeight(height);
@@ -40,9 +66,9 @@ export default ({
         />
       ) : (
         <Actions
-          onClose={() => setCardIsActive(true)}
-          onEdit={onEdit}
-          onCopy={onCopy}
+          onClose={showCard}
+          onEdit={_onEdit}
+          onCopy={_onCopy}
           onDelete={onDelete}
           style={{ flex: 1 }}
         />
