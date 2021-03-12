@@ -1,22 +1,5 @@
-import { pick, orderBy } from 'lodash';
+import { orderBy } from 'lodash';
 import moment from 'moment';
-
-export const usePickLessons = (lessons) => {
-  return lessons.map((item) => {
-    return pick(item, [
-      'id',
-      'number',
-      'name',
-      'type',
-      'color',
-      'teacher',
-      'location',
-      'appointedDate',
-      'startDate',
-      'endDate',
-    ]);
-  });
-};
 
 export const useSortArrayByDate = (array) => {
   return orderBy(

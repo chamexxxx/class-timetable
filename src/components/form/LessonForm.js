@@ -20,7 +20,7 @@ export default (props) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
-  const { onSubmit } = props;
+  const { onSubmit, buttonTitle } = props;
 
   useEffect(() => {
     setName(props.name);
@@ -62,7 +62,7 @@ export default (props) => {
   return (
     <Form
       onSubmit={_onSubmit}
-      buttonTitle="Создать"
+      buttonTitle={buttonTitle || 'Создать'}
       buttonDisabled={!(name && appointedDate)}>
       <Field>
         <TextInput
