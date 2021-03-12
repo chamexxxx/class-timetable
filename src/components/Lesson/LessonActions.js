@@ -8,14 +8,14 @@ export default ({ onClose, onEdit, onCopy, onDelete, style }) => (
       <Icon name="close" size={20} color="#000" onPress={onClose} />
     </Header>
     <Content>
-      <Action>
-        <Icon name="edit" size={20} color="#fff" onPress={onEdit} />
+      <Action onPress={onEdit}>
+        <Icon name="edit" size={20} color="#fff" />
       </Action>
-      <Action style={{ marginLeft: 10 }}>
-        <Icon name="content-copy" size={20} color="#fff" onPress={onCopy} />
+      <Action onPress={onCopy} style={{ marginLeft: 10 }}>
+        <Icon name="content-copy" size={20} color="#fff" />
       </Action>
-      <Action style={{ marginLeft: 10 }}>
-        <Icon name="delete-outline" size={25} color="#fff" onPress={onDelete} />
+      <Action onPress={onDelete} style={{ marginLeft: 10 }}>
+        <Icon name="delete-outline" size={25} color="#fff" />
       </Action>
     </Content>
   </Container>
