@@ -10,7 +10,9 @@ export default (props) => {
 
   const { id: timetableId } = params;
 
-  const handleEdit = () => {};
+  const handleEdit = () => {
+    navigation.navigate('LessonEditing', { ...props });
+  };
 
   const handleCopy = () => {
     navigation.navigate('LessonCreation', { timetableId, ...props });

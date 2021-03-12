@@ -1,5 +1,5 @@
 import { Model } from '@nozbe/watermelondb';
-import { field, relation } from '@nozbe/watermelondb/decorators';
+import { field, relation, action } from '@nozbe/watermelondb/decorators';
 
 export default class Lesson extends Model {
   static table = 'lessons';
@@ -18,4 +18,32 @@ export default class Lesson extends Model {
   @field('end_date') endDate;
 
   @relation('timetables', 'timetable_id') timetable;
+
+  @action async updateLesson({
+    name,
+    number,
+    type,
+    color,
+    teacher,
+    location,
+    appointedDate,
+    startDate,
+    endDate,
+  }) {
+    return await this.update((lesson) => {
+      lesson.number = Number(number);
+      lesson.name = name;
+      lesson.type = type;
+      lesson.color = color;
+      lesson.teacher = teacher;
+      lesson.location = location;
+      lesson.appointedDate = appointedDate.toISOString();
+      if (startDate) {
+        lesson.startDate = startDate.toISOString();
+      }
+      if (endDate) {
+        lesson.endDate = endDate.toISOString();
+      }
+    });
+  }
 }

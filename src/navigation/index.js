@@ -1,10 +1,11 @@
 import React from 'react';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Timetable from '../screens/Timetable.js';
-import Timetables from '../screens/Timetables.screen';
-import TimetableCreation from '../screens/TimetableCreation.screen';
-import LessonCreation from '../screens/LessonCreation.screen';
+import Timetable from 'screens/Timetable.js';
+import Timetables from 'screens/Timetables.screen';
+import TimetableCreation from 'screens/TimetableCreation.screen';
+import LessonCreation from 'screens/LessonCreation.screen';
+import LessonEditing from 'screens/LessonEditing.screen';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -55,6 +56,11 @@ const Navigation = () => (
         name="LessonCreation"
         component={LessonCreation}
         options={{ title: 'Создать занятие' }}
+      />
+      <Screen
+        name="LessonEditing"
+        component={LessonEditing}
+        options={{ title: 'Редактировать занятие' }}
       />
     </Navigator>
   </NavigationContainer>
