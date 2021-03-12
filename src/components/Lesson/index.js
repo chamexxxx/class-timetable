@@ -16,7 +16,7 @@ const Lesson = ({ item, ...props }) => {
     'startDate',
     'endDate',
   ]);
-  return <LessonWrapper {...data} {...props} />;
+  return <LessonWrapper data={data} {...props} />;
 };
 
 const enhance = withObservables(['item'], ({ item }) => ({

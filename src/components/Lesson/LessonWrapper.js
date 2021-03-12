@@ -8,26 +8,28 @@ export default (props) => {
   const navigation = useNavigation();
   const { params } = useRoute();
 
+  const { data } = props;
   const { id: timetableId } = params;
 
   const handleEdit = () => {
-    navigation.navigate('LessonEditing', { ...props });
+    navigation.navigate('LessonEditing', { ...data });
   };
 
   const handleCopy = () => {
-    navigation.navigate('LessonCreation', { timetableId, ...props });
+    navigation.navigate('LessonCreation', { timetableId, ...data });
   };
 
   const handleDelete = async () => {
     const lessonsCollection = database.get('lessons');
     await database.action(async () => {
-      const lesson = await lessonsCollection.find(props.id);
+      const lesson = await lessonsCollection.find(data.id);
       await lesson.destroyPermanently();
     });
   };
 
   return (
     <Lesson
+      {...data}
       {...props}
       onEdit={handleEdit}
       onCopy={handleCopy}
