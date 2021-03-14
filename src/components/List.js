@@ -1,26 +1,59 @@
-import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styled from 'styled-components/native';
+import Empty from './Empty';
 
-export default ({ items = [], style, onPress }) => {
+export default ({
+  items = [],
+  filterString = '',
+  emptyText,
+  onPress,
+  style,
+}) => {
+  const [filteredItems, setFilteredItems] = useState(items);
+
+  useEffect(() => {
+    setFilteredItems(
+      items.filter(({ name }) =>
+        name.toLowerCase().includes(filterString.toLowerCase()),
+      ),
+    );
+  }, [items, filterString]);
+
   return (
     <Container style={style}>
-      <ScrollView style={{ paddingHorizontal: 15, paddingVertical: 5 }}>
-        {items.length > 0 ? (
-          items.map((item, index) => (
+      {filteredItems.length > 0 ? (
+        <ScrollView style={{ paddingHorizontal: 15, paddingVertical: 5 }}>
+          {filteredItems.map((item, index) => (
             <View
               style={{
                 paddingBottom: index === items.length - 1 ? 10 : 0,
               }}
               key={index}>
-              <Item title={item.name} onPress={() => onPress(item)} />
+              <Item
+                title={item.name}
+                onPress={() => onPress && onPress(item)}
+              />
             </View>
-          ))
-        ) : (
-          <Text>Empty</Text>
-        )}
-      </ScrollView>
+          ))}
+        </ScrollView>
+      ) : (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Empty
+            text={
+              items.length === 0
+                ? emptyText
+                : 'По вашему запросу ничего не найдено'
+            }
+          />
+        </View>
+      )}
     </Container>
   );
 };
@@ -30,8 +63,8 @@ const Container = styled.View`
   border-radius: 15px;
 `;
 
-const Item = ({ title, onPress, appendComponent }) => (
-  <ItemContainer onPress={onPress}>
+const Item = ({ title, appendComponent, ...props }) => (
+  <ItemContainer {...props}>
     <ItemTitle>{title}</ItemTitle>
     {appendComponent || <Icon name="arrow-forward" size={25} color="#857cbd" />}
   </ItemContainer>

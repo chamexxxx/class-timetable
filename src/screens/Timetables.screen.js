@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
 import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import withObservables from '@nozbe/with-observables';
@@ -8,20 +8,11 @@ import CreationButton from 'components/CreationButton';
 import SearchInput from 'components/form/elements/SearchInput';
 
 const TimetablesScreen = ({ navigation, timetables }) => {
-  const [items, setItems] = useState([]);
   const [search, setSearch] = useState('');
 
   const navigateToTimetable = (id) => {
     navigation.navigate('Timetable', { id });
   };
-
-  useEffect(() => {
-    setItems(
-      timetables.filter(({ name }) =>
-        name.toLowerCase().includes(search.toLowerCase()),
-      ),
-    );
-  }, [timetables, search]);
 
   return (
     <View style={{ flex: 1, justifyContent: 'space-between' }}>
@@ -33,14 +24,16 @@ const TimetablesScreen = ({ navigation, timetables }) => {
         />
       </SearchContainer>
       <List
-        items={items}
+        items={timetables}
+        filterString={search}
+        emptyText="У вас нет ни одного расписания"
+        onPress={({ id }) => navigateToTimetable(id)}
         style={{
           flex: 1,
           top: -50,
           marginHorizontal: 15,
           paddingBottom: 40,
         }}
-        onPress={({ id }) => navigateToTimetable(id)}
       />
       <CreationButton
         label="Создать расписание"
@@ -55,7 +48,7 @@ const SearchContainer = styled.View`
   padding-horizontal: 15px;
   padding-top: 20px;
   padding-bottom: 70px;
-  background: #343434;
+  background: rgb(31, 162, 213);
 `;
 
 export default withDatabase(
