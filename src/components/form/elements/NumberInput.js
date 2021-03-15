@@ -6,7 +6,9 @@ export default React.forwardRef(({ value, onChangeValue, ...props }, ref) => {
   const [number, setNumber] = useState(null);
 
   useEffect(() => {
-    setNumber(String(value));
+    if (value && isFinite(toNumber(value))) {
+      setNumber(String(value));
+    }
   }, [value]);
 
   const onChangeText = (text) => {

@@ -13,7 +13,9 @@ export default ({ mode, value, onChangeValue, containerStyle, ...props }) => {
   const input = useRef(null);
 
   useEffect(() => {
-    setInputValue(formatDate(value));
+    if (value && moment(value).isValid()) {
+      setInputValue(formatDate(value));
+    }
   }, [value, formatDate]);
 
   const formatDate = useCallback(
