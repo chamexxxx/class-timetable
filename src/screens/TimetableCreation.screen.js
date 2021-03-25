@@ -2,7 +2,7 @@ import React from 'react';
 import { useDatabase } from '@nozbe/watermelondb/hooks';
 import Form from 'components/form/TimetableForm';
 
-const TimetableCreationScreen = ({ navigation }) => {
+export default ({ navigation }) => {
   const database = useDatabase();
 
   const onSubmit = async ({ name }) => {
@@ -18,5 +18,3 @@ const TimetableCreationScreen = ({ navigation }) => {
 
   return <Form onSubmit={onSubmit} />;
 };
-
-export default TimetableCreationScreen;

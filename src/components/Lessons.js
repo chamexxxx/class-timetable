@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FlatList } from 'react-native';
 import Lesson from './Lesson';
 
-export default ({ data, style }) => {
+export default ({ data = [], style }) => {
   const [activeLessonId, setActiveLessonId] = useState(null);
 
   const list = [...data].sort((a, b) => a.number > b.number);

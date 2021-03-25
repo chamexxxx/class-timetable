@@ -6,5 +6,5 @@ export default styled.Text`
   font-style: italic;
   color: #ffffff;
   background: #bf394d;
-  border-radius: 10px;
+  border-radius: 7px;
 `;
