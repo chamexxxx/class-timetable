@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Timetable from 'screens/Timetable.js';
+import Timetable from 'screens/Timetable.screen';
 import Timetables from 'screens/Timetables.screen';
 import TimetableCreation from 'screens/TimetableCreation.screen';
 import LessonCreation from 'screens/LessonCreation.screen';
