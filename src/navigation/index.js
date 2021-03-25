@@ -13,7 +13,7 @@ const MyTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    background: '#343434',
+    background: '#bf394d',
   },
 };
 
@@ -24,9 +24,9 @@ const Navigation = () => (
       screenOptions={{
         headerStyle: {
           backgroundColor: '#ffffff',
-          elevation: 0, //
+          elevation: 0,
         },
-        headerTintColor: '#bf394d',
+        headerTintColor: 'rgb(31, 162, 213)',
         cardStyle: { backgroundColor: '#343434' },
       }}>
       <Screen
@@ -35,11 +35,10 @@ const Navigation = () => (
         options={{
           title: 'Список расписаний',
           headerStyle: {
-            backgroundColor: '#343434',
+            backgroundColor: 'rgb(31, 162, 213)',
             elevation: 0,
           },
-          headerTintColor: '#bf394d',
-          cardStyle: { backgroundColor: '#bf394d' },
+          headerTintColor: '#ffffff',
         }}
       />
       <Screen
