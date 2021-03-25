@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import withObservables from '@nozbe/with-observables';
 import { useDatabase } from '@nozbe/watermelondb/hooks';
 import { useGroupLessons } from 'hooks';
@@ -7,6 +7,7 @@ import moment from 'moment';
 import CreationButton from 'components/CreationButton';
 import Calendar from 'components/Calendar';
 import Lessons from 'components/Lessons';
+import Empty from 'components/Empty';
 
 const useCurrentLessons = (lessons, date) => {
   const data = lessons.find((item) => item.date === date);
@@ -30,31 +31,40 @@ const TimetableScreen = ({ timetable, lessons, navigation, route }) => {
     setActiveDate(date.toISOString());
   };
 
+  const isEmpty = lessons.length === 0 || currentLessons.length === 0;
+
   return (
     <>
-      {lessons.length > 0 ? (
+      <Calendar
+        ref={calendar}
+        onDateSelected={onDateSelected}
+        style={
+          !isEmpty && {
+            borderBottomLeftRadius: 20,
+            borderBottomRightRadius: 20,
+          }
+        }
+      />
+      {currentLessons.length > 0 && (
         <>
-          <Calendar ref={calendar} onDateSelected={onDateSelected} />
-          <View style={{ paddingVertical: 10, paddingHorizontal: 15 }}>
-            {currentLessons.length > 0 ? (
-              <Lessons data={currentLessons} />
-            ) : (
-              <Text>empty</Text>
-            )}
+          <View style={{ flex: 1, paddingVertical: 10, paddingHorizontal: 15 }}>
+            {currentLessons.length > 0 && <Lessons data={currentLessons} />}
           </View>
-          <CreationButton
-            label="Создать занятие"
-            isFloating
-            onPress={() =>
-              navigation.navigate('LessonCreation', {
-                timetableId: timetable.id,
-              })
-            }
-          />
         </>
-      ) : (
-        <Text>Empty</Text>
       )}
+      {isEmpty && (
+        <Empty text="Занятий нет" style={{ backgroundColor: '#ffffff' }} />
+      )}
+      <CreationButton
+        label="Создать занятие"
+        isFloating
+        style={{ backgroundColor: '#000', color: '#fff' }}
+        onPress={() =>
+          navigation.navigate('LessonCreation', {
+            timetableId: timetable.id,
+          })
+        }
+      />
     </>
   );
 };
