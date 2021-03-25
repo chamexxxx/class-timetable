@@ -14,6 +14,10 @@ const TimetablesScreen = ({ navigation, database, timetables }) => {
     navigation.navigate('Timetable', { id });
   };
 
+  const handleEdit = (item) => {
+    navigation.navigate('TimetableEditing', { id: item.id, name: item.name });
+  };
+
   const handleDelete = ({ id }) => {
     Alert.alert(
       'Удалить расписание',
@@ -43,6 +47,7 @@ const TimetablesScreen = ({ navigation, database, timetables }) => {
         items={timetables}
         filterString={search}
         onPress={({ id }) => navigateToTimetable(id)}
+        onEdit={handleEdit}
         onDelete={handleDelete}
         emptyText="У вас нет ни одного расписания"
         style={{

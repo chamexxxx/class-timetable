@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Timetable from 'screens/Timetable.screen';
 import Timetables from 'screens/Timetables.screen';
 import TimetableCreation from 'screens/TimetableCreation.screen';
+import TimetableEditing from 'screens/TimetableEditing.screen';
 import LessonCreation from 'screens/LessonCreation.screen';
 import LessonEditing from 'screens/LessonEditing.screen';
 
@@ -50,6 +51,11 @@ const Navigation = () => (
         name="TimetableCreation"
         component={TimetableCreation}
         options={{ title: 'Создать расписание' }}
+      />
+      <Screen
+        name="TimetableEditing"
+        component={TimetableEditing}
+        options={{ title: 'Редактировать расписание' }}
       />
       <Screen
         name="LessonCreation"

@@ -1,15 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Form from './Form';
 import Field from './Field';
 import TextInput from './elements/TextInput';
 
-export default ({ onSubmit }) => {
+export default (props) => {
   const [name, setName] = useState(null);
+
+  const { onSubmit, buttonTitle } = props;
+
+  useEffect(() => {
+    setName(props.name);
+  }, [props]);
 
   return (
     <Form
       onSubmit={() => onSubmit({ name })}
-      buttonTitle="Создать"
+      buttonTitle={buttonTitle || 'Создать'}
       buttonDisabled={!name}>
       <Field>
         <TextInput
