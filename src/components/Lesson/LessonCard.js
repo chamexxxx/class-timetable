@@ -23,7 +23,7 @@ export default ({
   <View onLayout={onLayout}>
     <Container onPress={onPress}>
       <Header>
-        <LessonNumber>{number}</LessonNumber>
+        {number && <LessonNumber>{number}</LessonNumber>}
         {(startTime || endTime) && (
           <LessonTime>
             {startTime ? startTime : '...'}
