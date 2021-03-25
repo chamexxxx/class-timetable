@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styled from 'styled-components/native';
 import Empty from './Empty';
@@ -9,6 +9,8 @@ export default ({
   filterString = '',
   emptyText,
   onPress,
+  onEdit,
+  onDelete,
   style,
 }) => {
   const [filteredItems, setFilteredItems] = useState(items);
@@ -34,6 +36,8 @@ export default ({
               <Item
                 title={item.name}
                 onPress={() => onPress && onPress(item)}
+                onEdit={() => onEdit && onEdit(item)}
+                onDelete={() => onDelete && onDelete(item)}
               />
             </View>
           ))}
@@ -63,12 +67,48 @@ const Container = styled.View`
   border-radius: 15px;
 `;
 
-const Item = ({ title, appendComponent, ...props }) => (
-  <ItemContainer {...props}>
-    <ItemTitle>{title}</ItemTitle>
-    {appendComponent || <Icon name="arrow-forward" size={25} color="#857cbd" />}
-  </ItemContainer>
-);
+const Item = ({
+  title,
+  appendComponent,
+  onPress,
+  onEdit,
+  onDelete,
+  ...props
+}) => {
+  const [isActive, setIsActive] = useState(false);
+
+  return (
+    <ItemContainer
+      onPress={() => {
+        if (!isActive) {
+          onPress && onPress();
+        }
+        setIsActive(false);
+      }}
+      onLongPress={() => setIsActive(true)}>
+      <ItemTitle>{title}</ItemTitle>
+      {!isActive ? (
+        appendComponent || (
+          <Icon name="arrow-forward" size={25} color="#857cbd" />
+        )
+      ) : (
+        <>
+          <TouchableOpacity onPress={onEdit}>
+            <Icon
+              name="md-create-outline"
+              size={23}
+              color="steelblue"
+              style={{ marginRight: 7 }}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onDelete}>
+            <Icon name="trash-outline" size={23} color="crimson" />
+          </TouchableOpacity>
+        </>
+      )}
+    </ItemContainer>
+  );
+};
 
 const ItemContainer = styled.TouchableOpacity.attrs({
   activeOpacity: 0.8,
@@ -76,6 +116,7 @@ const ItemContainer = styled.TouchableOpacity.attrs({
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  min-height: 53px;
   margin-top: 10px;
   padding-vertical: 12px;
   padding-horizontal: 15px;
