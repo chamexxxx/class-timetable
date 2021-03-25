@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, ScrollView, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import withObservables from '@nozbe/with-observables';
 import styled from 'styled-components/native';
 import Empty from './Empty';
 
@@ -33,8 +34,8 @@ export default ({
                 paddingBottom: index === items.length - 1 ? 10 : 0,
               }}
               key={index}>
-              <Item
-                title={item.name}
+              <EnhancedItem
+                item={item}
                 onPress={() => onPress && onPress(item)}
                 onEdit={() => onEdit && onEdit(item)}
                 onDelete={() => onDelete && onDelete(item)}
@@ -68,7 +69,7 @@ const Container = styled.View`
 `;
 
 const Item = ({
-  title,
+  item,
   appendComponent,
   onPress,
   onEdit,
@@ -76,6 +77,8 @@ const Item = ({
   ...props
 }) => {
   const [isActive, setIsActive] = useState(false);
+
+  const { name } = item;
 
   return (
     <ItemContainer
@@ -86,7 +89,7 @@ const Item = ({
         setIsActive(false);
       }}
       onLongPress={() => setIsActive(true)}>
-      <ItemTitle>{title}</ItemTitle>
+      <ItemTitle>{name}</ItemTitle>
       {!isActive ? (
         appendComponent || (
           <Icon name="arrow-forward" size={25} color="#857cbd" />
@@ -109,6 +112,12 @@ const Item = ({
     </ItemContainer>
   );
 };
+
+const enhance = withObservables(['item'], ({ item }) => ({
+  item,
+}));
+
+const EnhancedItem = enhance(Item);
 
 const ItemContainer = styled.TouchableOpacity.attrs({
   activeOpacity: 0.8,
