@@ -1,4 +1,4 @@
-package com.classtimetable;
+package org.hipowa.classtimetable;
 
 import android.app.Application;
 import android.content.Context;

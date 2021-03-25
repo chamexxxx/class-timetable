@@ -1,4 +1,4 @@
-package com.classtimetable;
+package org.hipowa.classtimetable;
 
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;
