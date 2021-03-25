@@ -29,9 +29,9 @@ export default (props) => {
     setColor(props.color);
     setTeacher(props.teacher);
     setLocation(props.location);
-    setAppointedDate(moment(props.appointedDate));
-    setStartDate(moment(props.startDate));
-    setEndDate(moment(props.endDate));
+    setAppointedDate(moment(props.appointedDate || null));
+    setStartDate(moment(props.startDate || null));
+    setEndDate(moment(props.endDate || null));
   }, [props]);
 
   const _onSubmit = () => {
