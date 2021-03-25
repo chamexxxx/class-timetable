@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { View, Alert } from 'react-native';
 import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import withObservables from '@nozbe/with-observables';
 import styled from 'styled-components/native';
@@ -7,11 +7,27 @@ import List from 'components/List';
 import CreationButton from 'components/CreationButton';
 import SearchInput from 'components/form/elements/SearchInput';
 
-const TimetablesScreen = ({ navigation, timetables }) => {
+const TimetablesScreen = ({ navigation, database, timetables }) => {
   const [search, setSearch] = useState('');
 
   const navigateToTimetable = (id) => {
     navigation.navigate('Timetable', { id });
+  };
+
+  const handleDelete = ({ id }) => {
+    Alert.alert(
+      'Удалить расписание',
+      'Вы действительно хотите удалить расписание',
+      [{ text: 'Отмена' }, { text: 'OK', onPress: () => deleteTimetable(id) }],
+    );
+  };
+
+  const deleteTimetable = async (id) => {
+    const timetablesCollection = database.get('timetables');
+    await database.action(async () => {
+      const timetable = await timetablesCollection.find(id);
+      await timetable.destroyPermanently();
+    });
   };
 
   return (
@@ -26,8 +42,9 @@ const TimetablesScreen = ({ navigation, timetables }) => {
       <List
         items={timetables}
         filterString={search}
-        emptyText="У вас нет ни одного расписания"
         onPress={({ id }) => navigateToTimetable(id)}
+        onDelete={handleDelete}
+        emptyText="У вас нет ни одного расписания"
         style={{
           flex: 1,
           top: -50,
