@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
+    "android:generate:aab": "cd android && gradlew bundleRelease",
+    "android:test": "npm run android --variant=release",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
